@@ -97,4 +97,44 @@ async function runTests() {
     }
 }
 
+// CREATE/UPDATE CARD (PUT)
+async function createCard() {
+    try {
+        console.log("\n=== CREATE CARD (PUT) ===");
+
+        const cardId = 100; // Using ID 100 for new card
+        const cardData = {
+            id: cardId,
+            title: "New Card",
+            description: "This is a new card created with PUT request",
+            status: "active",
+            priority: "high",
+            dueDate: "2026-12-31"
+        };
+
+        const createCardResponse = await fetch(`${BASE_URL}/${cardId}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(cardData)
+        });
+
+        const createdCard = await createCardResponse.json();
+
+        console.log("Status:", createCardResponse.status);
+        console.log("Card Created/Updated:", createdCard);
+
+        console.log(
+            createCardResponse.status === 200
+                ? "✅ Card Creation (PUT) Passed"
+                : "❌ Card Creation (PUT) Failed"
+        );
+
+    } catch (error) {
+        console.error("Error creating card:", error);
+    }
+}
+
 runTests();
+createCard();
